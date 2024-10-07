@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{job.title}}
+{% endblock %}
+
+{% block body %}
+	<article class="flex flex-col justify-center items-center mt-32 ">
+		<section class="flex gap-4 ">
+			<div>
+				<p>Génération :</p>
+				<div class="flex justify-center">
+					<a href="{{path('app_cover_letter_generate', {'id':job.id})}}">{{ ux_icon('mdi:letter-l-box-outline', {'class': 'h-8 w-8 text-orange-400 hover:text-orange-300'}) }}</a>
+					<a href="{{path('app_linkedin_generate', {'id':job.id})}}">{{ ux_icon('mdi:linkedin', {'class': 'h-8 w-8 text-orange-400 hover:text-orange-300'}) }}</a>
+				</div>
+			</div>
+			<div class="mb-auto">
+				{% set item = job %}
+				{{ include('components/changeStatus.html.twig') }}
+				<div class="flex justify-center">
+					<a href="{{path('app_job_offer_edit', {'id' : job.id})}}">
+						<button>{{ ux_icon('mdi:pencil', {'class': 'h-6 w-6 text-orange-400 hover:text-orange-300'}) }}</button>
+					</a>
+					<a href="{{path('app_job_offer_delete', {'id' : job.id})}}">
+						<button>{{ ux_icon('mdi:trash-can-outline', {'class': 'h-6 w-6 text-red-500 hover:text-red-300'}) }}</button>
+					</a>
+				</div>
+			</div>
+		</section>
+		<section class="">
+			<h1>{{job.title}}</h1>
+			<h2>{{job.company}}</h2>
+			{% if job.location is not null %}
+				<h4>Adresse :
+					{{job.location}}
+				</h4>
+			{% endif %}
+			{% if job.link is not null %}
+				<a href="{{job.link}}" class="text-orange-500 hover:text-orange-300">Lien de l'offre</a>
+			{% endif %}
+			<div>
+				{% if job.contact_person is defined %}
+					<p>Contact :
+						{{job.contact_person}}
+					</p>
+				{% endif %}
+				{% if job.contact_email is defined %}
+					<p>Contact Email:
+						{{job.contact_email}}
+					</p>
+				{% endif %}
+			</div>
+			{% if job.salary is not null %}
+				<p>Salaire :
+					{{job.salary}}
+				</p>
+			{% endif %}
+			{% if job.applicationDate is defined %}
+				<p>Date de postulation :
+					{{job.applicationDate|date('d/m/Y')}}</p>
+			{% endif %}
+		</section>
+	</article>
+{% endblock %}

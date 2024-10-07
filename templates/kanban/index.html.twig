@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KANBAN DASHBOARD
+{% endblock %}
+
+{% block body %}
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="csrf-token" content="{{ csrf_token('drop') }}">
+
+			<title>Kanban Board For your Job Offers</title>
+			<script src="https://cdn.tailwindcss.com"></script>
+			<style>
+				.dragging {
+					opacity: 0.5;
+				}
+				.cBlue {
+					color: blue;
+				}
+
+				.cRed {
+					color: red;
+				}
+
+				.cOrange {
+					color: orange;
+				}
+				.cYellow {
+					color: yellow;
+				}
+			</style>
+		</head>
+		<body class="bg-gray-100">
+			<div class="flex flex-col items-center min-h-screen p-8">
+				<h1 class="mb-8 text-3xl font-bold text-gray-800">Job Application Status
+				</h1>
+
+				<!-- Kanban Board -->
+				<div
+					class="flex flex-grow w-full space-x-4 max-w-7xl">
+					<!-- Apply Column -->
+					<div class="flex flex-col w-1/5 p-4 bg-white rounded-lg shadow-lg" data-status="A postuler" ondragover="allowDrop(event)" ondrop="drop(event)">
+						<h2 class="mb-4 text-lg font-semibold text-gray-700 border-b-2">Apply</h2>
+						<div id="apply" class="flex-1 space-y-4">
+							{% for jobOfferAPostuler in jobOfferAPostulers %}
+								<div class="p-4 bg-blue-100 rounded-lg shadow" draggable="true" ondragstart="drag(event)" id="{{jobOfferAPostuler.id}}">{{jobOfferAPostuler.title}}</div>
+
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- On Hold Column -->
+					<div class="flex flex-col w-1/5 p-4 bg-white rounded-lg shadow-lg" data-status="En attente" ondragover="allowDrop(event)" ondrop="drop(event)">
+						<h2 class="mb-4 text-lg font-semibold text-gray-700 border-b-2">On Hold</h2>
+						<div id="on-hold" class="flex-1 space-y-4">
+							{% for jobOfferEnAttente in jobOfferEnAttentes %}
+								<div class="p-4 bg-yellow-100 rounded-lg shadow" draggable="true" ondragstart="drag(event)" id="{{jobOfferEnAttente.id}}">{{jobOfferEnAttente.title}}</div>
+
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- Interview Column -->
+					<div class="flex flex-col w-1/5 p-4 bg-white rounded-lg shadow-lg" data-status="Entretien" ondragover="allowDrop(event)" ondrop="drop(event)">
+						<h2 class="mb-4 text-lg font-semibold text-gray-700 border-b-2">Interview</h2>
+						<div id="interview" class="flex-1 space-y-4">
+							{% for jobOfferEntretien in jobOfferEntretiens %}
+								<div class="p-4 bg-orange-100 rounded-lg shadow" draggable="true" ondragstart="drag(event)" id="{{jobOfferEntretien.id}}">{{jobOfferEntretien.title}}</div>
+
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- Accepted Column -->
+					<div class="flex flex-col w-1/5 p-4 bg-white rounded-lg shadow-lg" data-status="Accepté" ondragover="allowDrop(event)" ondrop="drop(event)">
+						<h2 class="mb-4 text-lg font-semibold text-gray-700 border-b-2">Accepted</h2>
+						<div id="accepted" class="flex-1 space-y-4">
+							{% for jobOfferAccepte in jobOfferAcceptes %}
+								<div class="p-4 bg-green-100 rounded-lg shadow" draggable="true" ondragstart="drag(event)" id="{{jobOfferAccepte.id}}">{{jobOfferAccepte.title}}</div>
+
+							{% endfor %}
+						</div>
+					</div>
+
+					<!-- Rejected Column -->
+					<div class="flex flex-col w-1/5 p-4 bg-white rounded-lg shadow-lg" data-status="Refusé" ondragover="allowDrop(event)" ondrop="drop(event)">
+						<h2 class="mb-4 text-lg font-semibold text-gray-700 border-b-2">Rejected</h2>
+						<div id="rejected" class="flex-1 space-y-4">
+							{% for jobOfferRefuse in jobOfferRefuses %}
+								<div class="p-4 bg-red-100 rounded-lg shadow" draggable="true" ondragstart="drag(event)" id="{{jobOfferRefuse.id}}">{{jobOfferRefuse.title}}</div>
+
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script>
+				// Allow dropping
+function allowDrop(ev) {
+ev.preventDefault(); // Prevent default behavior to allow drop
+}
+
+// Drag the job item
+function drag(ev) {
+ev.dataTransfer.setData("text", ev.target.id); // Store the ID of the dragged item
+ev.target.classList.add("dragging"); // Add a class for visual indication (optional)
+}
+
+function drop(ev) { // Prevent default behavior
+ev.preventDefault();
+
+var data = ev.dataTransfer.getData("text"); // Get the ID of the dragged item
+var element = document.getElementById(data); // Get the dragged element
+console.log('Dropped element:', element);
+
+// Find the target container to drop the element
+var targetContainer = ev.target.closest("div[data-status]"); // Ensure we find a div with data-status
+
+if (! targetContainer) {
+console.error('No valid target container found');
+return; // Exit if targetContainer is not defined
+}
+
+// Append the dragged element to the target container
+targetContainer.appendChild(element);
+element.classList.remove("dragging");
+// Remove dragging class
+
+// Change the color of the dropped element based on the target container's status
+switch (targetContainer.dataset.status) {
+case "A postuler": element.className = "p-4 bg-blue-100 rounded-lg shadow"; // Blue color
+break;
+case "En attente": element.className = "p-4 bg-yellow-100 rounded-lg shadow"; // Yellow color
+break;
+case "Entretien": element.className = "p-4 bg-orange-100 rounded-lg shadow"; // Orange color
+break;
+case "Accepté": element.className = "p-4 bg-green-100 rounded-lg shadow"; // Green color
+break;
+case "Refusé": element.className = "p-4 bg-red-100 rounded-lg shadow"; // Red color
+break;
+default: element.className = "p-4 bg-gray-100 rounded-lg shadow"; // Default color
+}
+
+console.log('TargetContainer', targetContainer);
+// Log the target container for debugging
+
+// Prepare data to be sent to the server
+const payload = {
+id: data, // ID of the dragged item
+status: targetContainer.dataset.status // Get the status from the target container
+};
+const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+const csrfToken = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
+fetch('/api/job-offers/update-status', { // Change this URL to your Symfony route
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-CSRF-Token': csrfToken // Use the retrieved CSRF token
+},
+body: JSON.stringify(payload)
+}).then(response => response.json()).then(data => {
+console.log('Success:', data);
+// Handle success (e.g., update UI, notify user)
+}).catch((error) => {
+console.error('Error:', error);
+// Handle error (e.g., notify user)
+});
+}
+
+// Make the AJAX request to the Symfony backend
+			</script>
+		</body>
+	</html>
+{% endblock %}

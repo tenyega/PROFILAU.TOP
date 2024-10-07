@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle offre !
+{% endblock %}
+
+{% block body %}
+	<div class="my-10 p-4 rounded-md shadow-md bg-slate-50 w-80 m-auto">
+		{{ form_errors(formJobOffer) }}
+		{{ form_start(formJobOffer) }}
+		{{ form_row(formJobOffer.status) }}
+		{{ form_row(formJobOffer.title) }}
+		{{ form_row(formJobOffer.company) }}
+		{{ form_row(formJobOffer.link) }}
+		{{ form_row(formJobOffer.location) }}
+		{{ form_row(formJobOffer.salary) }}
+		{{ form_row(formJobOffer.contactPerson) }}
+		{{ form_row(formJobOffer.contactEmail) }}
+		{{ form_row(formJobOffer.applicationDate) }}
+		{{ form_row(formJobOffer.submit) }}
+		{{ form_end(formJobOffer) }}
+	</div>
+{% endblock %}

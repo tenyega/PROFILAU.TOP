@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Raleway;
+  background-color: rgb(255, 255, 255);
+}
+h1 {
+  @apply text-4xl font-bold tracking-tight;
+}
+h2 {
+  @apply text-xl font-semibold tracking-tight;
+}
+h3 {
+  @apply text-lg font-semibold tracking-tight;
+}
+h4 {
+  @apply text-base font-medium tracking-tight;
+}
+
+.kanbanSection {
+  box-shadow: 10px 10px 15px rgb(228, 228, 228);
+  border-radius: 0.2rem;
+  padding: 0.8rem 1.6rem;
+  background-color: rgb(247, 247, 247);
+
+  & h2 {
+    text-align: center;
+  }
+  & .container {
+    color: white;
+    margin: 1rem 0;
+    border-radius: 1rem;
+    padding: 0.5rem;
+
+    & h3 {
+      text-decoration: underline;
+    }
+  }
+  & .step1 {
+    background-color: rgb(9, 83, 123);
+  }
+  & .step2 {
+    background-color: rgb(9, 100, 123);
+  }
+  & .step3 {
+    background-color: rgb(9, 123, 108);
+  }
+  & .step4 {
+    background-color: rgb(9, 123, 82);
+  }
+  & .step5 {
+    background-color: rgb(123, 9, 9);
+  }
+}
+
+.dropShadow {
+  box-shadow: 10px 10px 15px rgb(228, 228, 228);
+}

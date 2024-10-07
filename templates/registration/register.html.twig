@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegistrationController!
+{% endblock %}
+
+{% block body %}
+
+	{% if app.user %}
+		<div class="mb-3">
+			You are logged in as
+			{{ app.user.userIdentifier }}<br>
+			Would you like to
+			<a href="{{ path('app_logout') }}">Logout ?</a>
+		</div>
+	{% else %}
+		<h1 class="text-center mt-24">Inscrivez-vous</h1>
+		<div class="flex justify-center m-auto mt-4 p-4 rounded-md shadow-md bg-slate-50 w-80">
+			{{ form_errors(formRegister) }}
+			{{ form_start(formRegister) }}
+			{{ form_row(formRegister.firstName) }}
+			{{ form_row(formRegister.lastName) }}
+			{{ form_row(formRegister.email) }}
+			{{ form_row(formRegister.password) }}
+			{{ form_row(formRegister.submit) }}
+			{{ form_end(formRegister) }}
+		</div>
+		<p class="text-center text-slate-600 mb-4 text-sm pb-48">Already have an account?
+			<a href="{{ path('app_login') }}" class="text-violet-600">Sign in</a>
+		</p>
+	{% endif %}
+{% endblock %}

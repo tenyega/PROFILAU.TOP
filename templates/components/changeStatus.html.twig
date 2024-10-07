@@ -1,0 +1,10 @@
+<form class="flex bg-slate-100 rounded-xl p-1" action="{{path('app_job_offer_status', {'id': item.id})}}" method="POST">
+	<p>{{ ux_icon('mdi:clock-time-ten-outline', {'class': 'h-6 w-6 text-orange-400 inline pr-1'}) }}</p>
+	<select class="bg-slate-100  p-1" name="status" onchange="this.form.submit()">
+		<option value="0" {% if item.status == 'A postuler' %} selected {% endif %}>A postuler</option>
+		<option value="1" {% if item.status == 'En attente' %} selected {% endif %}>En attente</option>
+		<option value="2" {% if item.status == 'Entretien' %} selected {% endif %}>Entretien</option>
+		<option value="3" {% if item.status == 'Refusé' %} selected {% endif %}>Refusé</option>
+		<option value="4" {% if item.status == 'Accepté' %} selected {% endif %}>Accepté</option>
+	</select>
+</form> 

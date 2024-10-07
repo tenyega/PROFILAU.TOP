@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-16">DASHBOARD</h1>
+	<div class="w-1/6 h-0.5 bg-orange-400 m-auto mb-8"></div>
+
+	<div class="flex justify-start ml-auto mb-2 w-3/4">
+		<a href="{{path('app_job_offer_new')}}">{{ ux_icon('mdi:plus-box-outline', {'class':'h-8 w-8 text-orange-400 hover:text-orange-300'}) }}</a>
+	</div>
+	<section class="grid grid-cols-2 gap-4 shadow-lg w-3/6 bg-slate-50 py-4 px-8 m-auto ">
+		{% for item in jobs %}
+			<article class="my-4">
+				<div class="flex">
+					<a href="{{path('app_job_offer_show', {'id' : item.id})}}" class="text-2xl font-semibold underline">{{item.title}}</a>
+					<div class="ml-4">
+						{{ include('components/changeStatus.html.twig') }}
+					</div>
+				</div>
+				<div class="pl-6">
+					{% for coverLetter in item.coverLetters %}
+						<a href="{{path('app_cover_letter_show', {'id' : coverLetter.id})}}">Lettre de motivation du
+							{{coverLetter.createdAt|date('d/m/Y')}}</a>
+						<a href="{{path('app_cover_letter_delete', {'id' : coverLetter.id})}}">
+							<button>{{ ux_icon('mdi:trash-can-outline', {'class' : 'h-6 w-6 text-red-500 hover:text-red-300 '}) }}</button>
+						</a>
+						<br>
+					{% endfor %}
+					{% for linkedInMessage in item.linkedInMessages %}
+						<a href="{{path('app_linkedin_show', {'id' : linkedInMessage.id})}}">Message LinkedIn du
+							{{linkedInMessage.createdAt|date('d/m/Y')}}</a>
+						<a href="{{path('app_linkedin_delete', {'id' : linkedInMessage.id})}}">
+							<button>{{ ux_icon('mdi:trash-can-outline', {'class' : 'h-6 w-6 text-red-500 text-center hover:text-red-300'}) }}</button>
+
+						</a>
+						<br>
+					{% endfor %}
+				</div>
+			</article>
+		{% endfor %}
+	</section>
+	<div class="flex justify-end w-3/4">
+		<a href="{{path('app_job_offer_all')}}" class=" mt-8 font-semibold text-orange-400 hover:text-orange-300">Retrouvez toutes vos anciennes offres...</a>
+	</div>
+{% endblock %}

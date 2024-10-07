@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	{% if app.user %}
+		<h1 class="mt-60 text-6xl text-orange-400 text-center">Bon retour sur Profilau.top
+			{{app.user.firstName|capitalize}}</h1>
+		<div class="w-3/6 h-0.5 bg-orange-400 m-auto mb-8"></div>
+		<p class="w-2/3 font-medium text-2xl m-auto text-center">Vous pouvez facilement gérer vos candidatures, générer automatiquement vos lettres de motivation personnalisées et préparer vos messages LinkedIn en un clin d'œil.
+			<br><br>Simplifiez votre recherche d’emploi et mettez toutes les chances de votre côté pour décrocher le poste de vos rêves !</p>
+	{% else %}
+		<h1 class="mt-60 text-6xl text-orange-400 text-center">Bienvenue sur Profilau.top</h1>
+		<div class="w-3/6 h-0.5 bg-orange-400 m-auto mb-8"></div>
+		<p class="w-2/3 font-medium text-2xl m-auto text-center">Votre assistant personnel pour simplifier la gestion de vos candidatures !
+			<br>Générez automatiquement des lettres de motivation sur-mesure et des messages LinkedIn professionnels en quelques clics.
+			<br>Optimisez votre recherche d'emploi et laissez-nous vous accompagner vers le succès !</p>
+	{% endif %}
+{% endblock %}

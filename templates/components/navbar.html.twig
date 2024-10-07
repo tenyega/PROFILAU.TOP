@@ -1,0 +1,22 @@
+<header class="bg-orange-300 py-2">
+	<nav class="flex flex-row justify-around">
+		<div class="flex flex-row gap-2">
+			<a href="{{path('app_home')}}">{{ ux_icon('mdi:home-variant', {'class' : 'h-8 w-8 bg-white rounded-md  text-orange-400  hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			{% if app.user is not null %}
+			<a href="{{path('app_dashboard')}}">{{ ux_icon('mdi:view-dashboard', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			<a href="{{path('app_kanban')}}">{{ ux_icon('mdi:sitemap', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			<a href="{{path('app_job_offer_all')}}">{{ ux_icon('mdi:archive', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			<a href="{{path('app_job_offer_new')}}">{{ ux_icon('mdi:archive-plus', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+		{% endif %}
+		</div>
+		<div class="flex flex-row gap-2">
+			{% if app.user is not null %}
+				<img src="/img/default.png" alt="user profile image" class="rounded-3xl w-8 h-8 hover:scale-125 transition-transform ease-in-out">
+				<a href="{{path('app_logout')}}">{{ ux_icon('mdi:logout-variant', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			{% else %}
+				<a href="{{path('app_login')}}">{{ ux_icon('mdi:login', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+				<a href="{{path('app_register')}}">{{ ux_icon('mdi:register', {'class' : 'h-8 w-8 bg-white rounded-md text-orange-400 hover:scale-125 transition-transform ease-in-out'}) }}</a>
+			{% endif %}
+		</div>
+	</nav>
+</header>

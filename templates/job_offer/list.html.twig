@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lettre de motivation
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center mt-16">Tout vos offres d'emplois
+	</h1>
+	<div class="w-2/6 h-0.5 bg-orange-400 m-auto mb-8"></div>
+	<article class="w-1/4 m-auto">
+		{% for item in jobs %}
+			<div class="mb-6">
+				<a href="{{path('app_job_offer_show', {'id': item.id})}}" class="text-orange-400 font-semibold text-2xl hover:text-orange-300">•
+					{{item.title}}</a>
+				<p class="pl-4">Entreprise :
+					{{item.company}}</p>
+			</div>
+		{% endfor %}
+	</article>
+{% endblock %}
